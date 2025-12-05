@@ -19,7 +19,26 @@ A modern, fast, and user-friendly graphical interface for **yay** on Arch-based 
 ### 🔄 Updates
 ![Updates](https://s6.ezgif.com/tmp/ezgif-6d68827d82fa3940.gif)
 
+## 🛠️ Development
+
 ---
+
+```bash
+git clone https://github.com/ahmoodio/yay-gui-manager.git
+cd yay-gui-manager
+pip install --user -r python/requirements
+./python/yay_gui.py
+```
+
+Feel free to open issues or PRs for:
+
+- New views or filters  
+- Better error handling and logging  
+- Translations / localization  
+- AppImage / Flatpak / PKGBUILD packaging  
+
+---
+
 
 ## 🧩 Desktop Launcher Installation
 
@@ -39,9 +58,20 @@ This script will:
 - Refresh icon & desktop databases  
 - Make the app show up in your system menu
 
+---
+
+## ⚠️ Disclaimer  
+
+This is a GUI wrapper around `yay`. Always check what will be installed or removed, and review AUR PKGBUILDs as you normally would in the terminal.
 
 ---
 
 ## 📄 License
 
 Included in LICENSE file.
+
+---
+
+## ⭐ Support  
+
+If you find this useful, please ⭐ the repo!
