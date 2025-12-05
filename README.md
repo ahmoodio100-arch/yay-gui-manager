@@ -1,6 +1,4 @@
-# Yay GUI (Qt)
-
-One‑paste install and run (Arch‑based):
+Full script to install the yay gui app
 
 ```
 sudo pacman -Syu --needed python python-pip python-pyqt5 git base-devel && \
