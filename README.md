@@ -1,84 +1,45 @@
-# yay-gui-manager
+# yay-gui-manager — Install & Run
 
-This folder contains Python desktop helpers for Arch-based OSes (Arch, Manjaro, EndeavourOS, CachyOS).
+This folder contains GUI utilities for Arch-based OSes. The Yay GUI uses PyQt5; the updater uses Python's built‑in Tkinter.
 
-- Qt (main): `yay_gui.py` — search/install packages, list installed, and selective updates (Repo + AUR) with streaming results.
-- Tk helper: `cachy_updater_gui.py` — simple updater using pacman + yay.
+Tools:
+- yay_gui.py — Qt GUI for searching/installing packages and selective updates via `pacman`/`yay`.
+- cachy_updater_gui.py — Tk GUI for updates (pacman + yay) in a simple table.
 
-## Distro Copy‑Paste Blocks (Arch family)
+## Quick Setup (Linux)
 
-Use the matching block below to install system dependencies, ensure `yay` is present (AUR helper), clone this repo, and run the Qt GUI. No npm is required.
-
-EndeavourOS:
-```
-sudo pacman -Syu --needed python python-pip python-pyqt5 tk base-devel git
-if ! command -v yay >/dev/null 2>&1; then
-  git clone https://aur.archlinux.org/yay.git
-  pushd yay && makepkg -si && popd
-fi
-git clone https://github.com/ahmoodio/yay-gui-manager.git
-cd yay-gui-manager
-python3 python/yay_gui.py
-```
-
-CachyOS:
-```
-sudo pacman -Syu --needed python python-pip python-pyqt5 tk base-devel git
-if ! command -v yay >/dev/null 2>&1; then
-  git clone https://aur.archlinux.org/yay.git
-  pushd yay && makepkg -si && popd
-fi
-git clone https://github.com/ahmoodio/yay-gui-manager.git
-cd yay-gui-manager
-python3 python/yay_gui.py
-```
-
-Arch Linux:
-```
-sudo pacman -Syu --needed python python-pip python-pyqt5 tk base-devel git
-if ! command -v yay >/dev/null 2>&1; then
-  git clone https://aur.archlinux.org/yay.git
-  pushd yay && makepkg -si && popd
-fi
-git clone https://github.com/ahmoodio/yay-gui-manager.git
-cd yay-gui-manager
-python3 python/yay_gui.py
-```
-
-Manjaro:
-```
-sudo pacman -Syu --needed python python-pip python-pyqt5 tk base-devel git
-if ! command -v yay >/dev/null 2>&1; then
-  git clone https://aur.archlinux.org/yay.git
-  pushd yay && makepkg -si && popd
-fi
-git clone https://github.com/ahmoodio/yay-gui-manager.git
-cd yay-gui-manager
-python3 python/yay_gui.py
-```
-
-Optional pip fallback (if PyQt5 not found):
-```
-pip3 install --user -r python/requirements
-```
-
-Notes:
-- The Qt GUI prefers `konsole`; otherwise it will try common terminals (kitty, xfce4-terminal, gnome-terminal, xterm, tilix, foot, wezterm).
-- `yay_gui.py` uses `pacman` for repo metadata and `yay` for AUR actions. If `yay` is not installed you can still do repo-only actions.
-
-## Run Other Tools
-
-- Tk updater (pacman + yay):
-```
-python3 python/cachy_updater_gui.py
-```
-
-## One‑Command Installer (Arch‑based only)
-
-The installer supports Arch-based systems and will install system packages, falling back to pip for PyQt5 if needed.
+Option A — One‑liner installer (recommended):
 
 ```
 bash python/install_dependencies.sh
 ```
 
-See also: python/INSTALL.md for more background and tips. No npm is required.
+This will:
+- Detect your distro and install system packages for Python, PyQt5, and Tkinter when possible.
+- Fall back to `pip install` for PyQt5 using `python/requirements` if needed.
+- Remind you to install `yay` (AUR helper) if not present.
+
+Option B — Manual install (Arch / Manjaro / EndeavourOS / CachyOS):
+
+- `sudo pacman -Syu --needed python python-pip python-pyqt5 tk`
+- Install `yay` from AUR if missing:
+  - `sudo pacman -S --needed base-devel git`
+  - `git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si`
+
+## Run the apps (Arch‑based)
+
+- Yay GUI (Qt):
+  - `python3 python/yay_gui.py`
+  - Requires `pacman` and `yay` available in PATH.
+
+- Cachy Updater GUI (Tk):
+  - `python3 python/cachy_updater_gui.py`
+
+Only the Qt manager and Tk updater are included.
+
+## Notes & Tips
+
+- Terminals: The Qt Yay GUI prefers `konsole` if available; otherwise it will try common terminals (kitty, xfce4-terminal, gnome-terminal, xterm, tilix, foot, wezterm). You can change `$TERMINAL` to influence the choice.
+- Tkinter: On some distros, the Python stdlib Tkinter needs a system package (e.g. `tk` or `python3-tk`). The installer script handles common cases.
+- Pip vs system packages: System packages for PyQt5 are preferred on Linux. The installer falls back to pip if the module import fails.
+- AUR helper: The Qt Yay GUI calls `yay` for AUR actions. If you don’t use AUR, you can still use repo-only functionality via `pacman` operations in the UI.
