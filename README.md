@@ -69,6 +69,7 @@ chmod +x yay_gui.py
 ./yay_gui.py
 ```
 Alternatevly you can use yay:
+
 ```yay -S yay-gui-manager-git```
 ---
 
