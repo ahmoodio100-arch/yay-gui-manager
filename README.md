@@ -53,6 +53,10 @@ Install runtime dependencies from pacman (no pip required):
 ```bash
 sudo pacman -Syu --needed python python-pyqt5 yay git base-devel
 ```
+easiest most forward way is using yay:
+```bash
+yay -S yay-gui-manager-git
+```
 
 Then clone and run:
 
@@ -68,10 +72,7 @@ Or make it executable:
 chmod +x yay_gui.py
 ./yay_gui.py
 ```
-Alternatevly you can use yay:
 
-```bash
-yay -S yay-gui-manager-git```
 ---
 
 # 🎛️ Desktop Launcher
