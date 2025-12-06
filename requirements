@@ -1,0 +1,18 @@
+# Python dependencies for Yay GUI Manager when using a virtualenv.
+# On Arch-based systems it is usually better to install system packages:
+#
+#   sudo pacman -Syu --needed python python-pyqt5 yay
+#
+# and then run:
+#
+#   python yay_gui.py
+#
+# Only use this file with:
+#
+#   python -m venv .venv
+#   source .venv/bin/activate
+#   pip install -r requirements
+#
+# Using pip system-wide on Arch may conflict with PEP 668 (externally managed).
+
+PyQt5>=5.15
