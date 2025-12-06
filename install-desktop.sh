@@ -2,39 +2,62 @@
 # install-desktop.sh
 # Install Yay GUI Manager launcher + icon into the current user's environment.
 
-set -e
+set -euo pipefail
 
 APP_ID="yay-gui"
-DESKTOP_SOURCE="desktop/yay-gui.desktop"
-ICON_SOURCE="desktop/yay-gui.png"
-
-DESKTOP_TARGET="${HOME}/.local/share/applications/${APP_ID}.desktop"
-ICON_TARGET="${HOME}/.local/share/icons/hicolor/256x256/apps/${APP_ID}.png"
 
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+DESKTOP_SOURCE="${SCRIPT_DIR}/desktop/yay-gui.desktop"
+ICON_SOURCE="${SCRIPT_DIR}/desktop/yay-gui.png"
 
-echo "Using project directory: ${SCRIPT_DIR}"
+DESKTOP_TARGET="${HOME}/.local/share/applications/${APP_ID}.desktop"
+ICON_BASE="${HOME}/.local/share/icons/hicolor"
 
-if [[ ! -f "${SCRIPT_DIR}/${DESKTOP_SOURCE}" ]]; then
-  echo "Error: ${DESKTOP_SOURCE} not found in project directory."
+echo "== Yay GUI Manager desktop installer =="
+echo "Project directory: ${SCRIPT_DIR}"
+echo
+
+# 1) Check .desktop file
+if [[ ! -f "${DESKTOP_SOURCE}" ]]; then
+  echo "ERROR: ${DESKTOP_SOURCE} not found."
+  echo "Make sure you have desktop/yay-gui.desktop in the repo."
   exit 1
 fi
 
 mkdir -p "$(dirname "${DESKTOP_TARGET}")"
-mkdir -p "$(dirname "${ICON_TARGET}")"
+cp "${DESKTOP_SOURCE}" "${DESKTOP_TARGET}"
+echo "✓ Installed desktop file -> ${DESKTOP_TARGET}"
 
-cp "${SCRIPT_DIR}/${DESKTOP_SOURCE}" "${DESKTOP_TARGET}"
-echo "Copied ${DESKTOP_SOURCE} -> ${DESKTOP_TARGET}"
+# 2) Install icon (all sizes if possible)
+if [[ -f "${ICON_SOURCE}" ]]; then
+  echo "Found icon at ${ICON_SOURCE}"
+  echo "Installing icon(s)..."
 
-# Icon is optional; only install if present
-if [[ -f "${SCRIPT_DIR}/${ICON_SOURCE}" ]]; then
-  cp "${SCRIPT_DIR}/${ICON_SOURCE}" "${ICON_TARGET}"
-  echo "Copied ${ICON_SOURCE} -> ${ICON_TARGET}"
+  # If ImageMagick is available, generate proper sizes
+  if command -v convert >/dev/null 2>&1; then
+    echo "ImageMagick detected – generating multiple icon sizes."
+
+    for size in 16 32 48 64 128 256; do
+      target_dir="${ICON_BASE}/${size}x${size}/apps"
+      mkdir -p "${target_dir}"
+      convert "${ICON_SOURCE}" -resize "${size}x${size}" \
+        "${target_dir}/${APP_ID}.png"
+      echo "  - ${size}x${size} -> ${target_dir}/${APP_ID}.png"
+    done
+  else
+    echo "ImageMagick not found – installing original icon as 256x256 only."
+    target_dir="${ICON_BASE}/256x256/apps"
+    mkdir -p "${target_dir}"
+    cp "${ICON_SOURCE}" "${target_dir}/${APP_ID}.png"
+    echo "  - 256x256 -> ${target_dir}/${APP_ID}.png"
+    echo "Tip: install 'imagemagick' if you want auto-resized icon sizes."
+  fi
 else
-  echo "Note: ${ICON_SOURCE} not found, skipping icon install."
+  echo "⚠ No icon found at ${ICON_SOURCE}"
+  echo "   Place your logo as desktop/yay-gui.png and re-run this script"
 fi
 
-# Decide Exec=
+# 3) Decide Exec= command in .desktop
 if command -v yay-gui-manager >/dev/null 2>&1; then
   EXEC_CMD="yay-gui-manager"
 else
@@ -42,17 +65,16 @@ else
 fi
 
 sed -i "s|^Exec=.*$|Exec=${EXEC_CMD}|" "${DESKTOP_TARGET}"
-echo "Set Exec= to: ${EXEC_CMD}"
+echo "✓ Updated Exec= in desktop file to: ${EXEC_CMD}"
 
-# Refresh desktop + icon caches (best effort)
+# 4) Refresh desktop & icon caches (best effort)
 if command -v update-desktop-database >/dev/null 2>&1; then
   update-desktop-database "${HOME}/.local/share/applications" || true
 fi
 
 if command -v gtk-update-icon-cache >/dev/null 2>&1; then
-  gtk-update-icon-cache -q -t -f "${HOME}/.local/share/icons/hicolor" || true
+  gtk-update-icon-cache -q -t -f "${ICON_BASE}" || true
 fi
 
 echo
-echo "✅ Yay GUI Manager launcher installed."
-echo "   It should now appear in your application menu."
+echo "✅ Done! 'Yay GUI Manager' should now appear in your app menu with the new icon."
