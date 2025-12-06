@@ -14,19 +14,19 @@ Built with <strong>Python + PyQt5</strong>, with real-time streaming parsing for
 
 ### 🔍 Search & Install  
 <em>Search both repo + AUR and view descriptions in a side panel.</em>  
-![Search Demo](https://files.catbox.moe/xyotg3.gif)
+![Search Demo](https://files.catbox.moe/2izcwr.gif)
 
 ---
 
 ### 📦 Installed Packages  
 <em>Explicitly installed packages (pacman -Qe) with filter + batch uninstall.</em>  
-![Installed Tab](https://files.catbox.moe/3q3te2.gif)
+![Installed Tab](https://files.catbox.moe/w32hbc.gif)
 
 ---
 
 ### 🔄 Updates Tab  
 <em>Repo + AUR updates (yay -Qu / -Qua) with batch update tools.</em>  
-![Updates Tab](https://files.catbox.moe/l5hs9n.gif)
+![Updates Tab](https://files.catbox.moe/u0i2h2.gif)
 
 ---
 
