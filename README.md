@@ -53,7 +53,7 @@ Install runtime dependencies from pacman (no pip required):
 ```bash
 sudo pacman -Syu --needed python python-pyqt5 yay git base-devel
 ```
-easiest most forward way is using yay:
+Easiest most forward way is using (yay):
 ```bash
 yay -S yay-gui-manager-git
 ```
