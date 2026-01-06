@@ -15,6 +15,18 @@
 
 ---
 
+## 📸 Showcase
+
+<div align="center">
+  <p><strong>Main Interface</strong></p>
+  <img src="https://raw.githubusercontent.com/ahmoodio/yay-gui-manager/main/assets/yay-gui-manager-main.png" width="800px" alt="Main GUI Screenshot">
+  <br><br>
+  <p><strong>Application in Action</strong></p>
+  <img src="https://raw.githubusercontent.com/ahmoodio/yay-gui-manager/main/assets/demo.gif" width="800px" alt="Yay GUI Manager Demo GIF">
+</div>
+
+---
+
 ## 📖 Overview
 **Yay GUI Manager** is a modern graphical interface designed to simplify managing Arch Linux and AUR packages. It wraps the powerful `yay` helper in an intuitive interface, making package operations accessible to everyone from beginners to power users.
 
