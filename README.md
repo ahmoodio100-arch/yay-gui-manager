@@ -46,7 +46,7 @@
 <em>Repo + AUR updates (yay -Qu / -Qua) with batch update tools.</em>  
 ![Updates Tab](https://files.catbox.moe/u0i2h2.gif)
 
-<p align="right">(<a href="#top">back to top</a>)</p>
+<p align="right"><a href="#top"><b>↑ Back to Top</b></a></p>
 
 ---
 
@@ -56,20 +56,76 @@
   - **Search & Install** – uses `pacman -Ss` and `yay -Ss --aur`
   - **Installed** – uses `pacman -Qe` to list explicitly installed packages
   - **Updates** – uses `yay -Qu` and `yay -Qua`
-- Multi-select install / uninstall / update using checkboxes
-- Package details panel with description and URL (`pacman -Si`, `yay -Si --aur`)
-- External terminal integration:
+- **Multi-select:** Install / uninstall / update using checkboxes
+- **Package details:** Side panel with description and URL (`pacman -Si`, `yay -Si --aur`)
+- **External terminal integration:**
   - Prefers **Konsole**
   - Falls back to kitty / xfce4-terminal / gnome-terminal / tilix / xterm / wezterm / kgx / foot
-- Optional “keep Konsole open after command finishes”
-- Crash log written to `/tmp/yay_gui_error.log`
+- **Session Control:** Optional “keep Konsole open after command finishes”
+- **Debugging:** Crash log written to `/tmp/yay_gui_error.log`
 
-<p align="right">(<a href="#top">back to top</a>)</p>
+<p align="right"><a href="#top"><b>↑ Back to Top</b></a></p>
 
 ---
 
 # 📥 Installation (Arch / CachyOS)
 
-Easiest way is using [yay](https://github.com/Jguer/yay):
+The easiest way is using [yay](https://github.com/Jguer/yay):
 ```bash
 yay -S yay-gui-manager-git
+
+Manual Installation
+
+Install runtime dependencies from pacman (no pip required):
+Bash
+
+sudo pacman -Syu --needed python python-pyqt5 yay git base-devel
+
+Then clone and run:
+Bash
+
+git clone [https://github.com/ahmoodio/yay-gui-manager.git](https://github.com/ahmoodio/yay-gui-manager.git)
+cd yay-gui-manager
+python yay_gui.py
+
+<p align="right"><a href="#top"><b>↑ Back to Top</b></a></p>
+🎛️ Desktop Launcher
+
+To have Yay GUI Manager appear in your app menu:
+Automatic (recommended)
+
+From the repo root:
+Bash
+
+chmod +x install-desktop.sh
+./install-desktop.sh
+
+Manual
+Bash
+
+cp desktop/yay-gui.desktop ~/.local/share/applications/
+# Optional icon (if you add desktop/yay-gui.png)
+cp desktop/yay-gui.png ~/.local/share/icons/hicolor/256x256/apps/
+
+<p align="right"><a href="#top"><b>↑ Back to Top</b></a></p>
+🧩 Development (Optional venv)
+
+If you prefer to use a virtual environment and pip:
+Bash
+
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements
+python yay_gui.py
+
+    ⚠️ On Arch, avoid using system-wide pip due to PEP 668. Prefer pacman for system packages.
+
+<p align="right"><a href="#top"><b>↑ Back to Top</b></a></p>
+📄 License
+
+MIT License. See LICENSE.
+⭐ Support
+
+If you find this useful, please ⭐ the repo and share feedback or PRs.
+
+<p align="right"><a href="#top"><b>↑ Back to Top</b></a></p>
